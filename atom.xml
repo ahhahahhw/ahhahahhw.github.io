@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-06-27T16:53:45.518Z</updated>
+  <updated>2022-06-27T17:21:49.612Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,67 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://example.com/2022/06/28/updateFileTime/"/>
+    <id>http://example.com/2022/06/28/updateFileTime/</id>
+    <published>2022-06-27T17:21:27.153Z</published>
+    <updated>2022-06-27T17:21:49.612Z</updated>
+    
+    <content type="html"><![CDATA[#!/usr/bin/env node/*批量更新修改时间博客自动更新文章的修改时间*/console.log('脚本开始运行..');var fs = require("fs"); //请求文件系统var file = "./txt"; //设置读取和写入的文件，当前目录下的test文件var RegExp=/(updated:\s*)((\d{2}(([02468][048])|([13579][26]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|([1-2][0-9])))))|(\d{2}(([02468][1235679])|([13579][01345789]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\s((([0-1][0-9])|(2?[0-3]))\:([0-5]?[0-9])((\s)|(\:([0-5]?[0-9])))))/g;fs.readdir("./",function(err,files){var len=files.length;var file=null;for(var i=0;i<len;i++){file=files[i];//console.log("读取文件：",file);if(file.indexOf(".md")>-1){console.log("正在处理文件：",file);writeFileTime(file,fs);}}});/*file:读取时间的文件以及写入内容的文件fs: 文件系统*/function writeFileTime(file,fs){fs.readFile(file, 'utf8',function(err, data) { //读取文件内容if (err) return console.log("读取文件内容错误：",err);//console.log("文件"+file+"的内容：",data);if(RegExp.test(data)){ //如果匹配到`updated`字段fs.stat(file,function(err, stats) { //读取文件信息，创建时间等if (err) return console.log("读取文件信息错误：",err);var updateds=data.match(RegExp);//console.log("updated数组:",updateds);if(updateds.length>1) console.log("文件"+file+"匹配到多处update字段");var updated=updateds[0].replace("updated: ","").replace(/-/g,"/");  //时间格式化为2018/01/29 21:33:30//console.log("updated:",updated);if(new Date(stats.mtime).getTime()-new Date(Date.parse(updated))>1000*60*5){ // 只要修改时间和文章内updated时间差大于1000毫秒*60*5=5分钟就触发更新var result= data.replace(RegExp,"updated: "+getFormatDate(stats.mtime)); //替换更新时间fs.writeFile(file, result, 'utf8',function(err) { //写入新的文件内容if (err) return console.log("写文件错误：",err);fs.utimes(file,new Date(stats.atime),new Date(stats.mtime),function(err){  //还原访问时间和修改时间if (err) return console.log("修改时间失败：",err);console.log(file,"成功更新时间");});});}});}});}/* timeStr:时间，格式可为："September 16,2016 14:15:05、 "September 16,2016"、"2016/09/16 14:15:05"、"2016/09/16"、 '2014-04-23T18:55:49'和毫秒 dateSeparator：年、月、日之间的分隔符，默认为"-"， timeSeparator：时、分、秒之间的分隔符，默认为":" */function getFormatDate(timeStr, dateSeparator, timeSeparator) {    dateSeparator = dateSeparator ? dateSeparator : "-";    timeSeparator = timeSeparator ? timeSeparator : ":";    var date = new Date(timeStr),            year = date.getFullYear(),// 获取完整的年份(4位,1970)            month = date.getMonth(),// 获取月份(0-11,0代表1月,用的时候记得加上1)            day = date.getDate(),// 获取日(1-31)            hour = date.getHours(),// 获取小时数(0-23)            minute = date.getMinutes(),// 获取分钟数(0-59)            seconds = date.getSeconds(),// 获取秒数(0-59)            Y = year + dateSeparator,            M = ((month + 1) > 9 ? (month + 1) : ('0' + (month + 1))) + dateSeparator,            D = (day > 9 ? day : ('0' + day)) + ' ',            h = (hour > 9 ? hour : ('0' + hour)) + timeSeparator,            m = (minute > 9 ? minute : ('0' + minute)) + timeSeparator,            s = (seconds > 9 ? seconds : ('0' + seconds)),            formatDate = Y + M + D + h + m + s;    return formatDate;}]]></content>
+    
+    
+      
+      
+    <summary type="html">#!/usr/bin/env node
+/*
+批量更新修改时间
+博客自动更新文章的修改时间
+*/
+
+console.log(&#39;脚本开始运行..&#39;);
+var fs = require(&quot;fs&quot;); //请求文件系统
+var file = &quot;./txt&quot;; //设置读取和写入的文件</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2022/06/28/writeupdatetime/"/>
+    <id>http://example.com/2022/06/28/writeupdatetime/</id>
+    <published>2022-06-27T17:17:35.827Z</published>
+    <updated>2022-06-27T17:18:08.682Z</updated>
+    
+    <content type="html"><![CDATA[#!/usr/bin/env node/*批量添加修改时间用于bolg初始化修改时间*/console.log('脚本开始运行..');var fs = require("fs"); //请求文件系统var file = "./txt"; //设置读取和写入的文件，当前目录下的test文件var RegExp=/(updated:\s*)((\d{2}(([02468][048])|([13579][26]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|([1-2][0-9])))))|(\d{2}(([02468][1235679])|([13579][01345789]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\s((([0-1][0-9])|(2?[0-3]))\:([0-5]?[0-9])((\s)|(\:([0-5]?[0-9])))))\r/g;fs.readdir("./",function(err,files){var len=files.length;var file=null;for(var i=0;i<len;i++){file=files[i];//console.log("读取文件：",file);if(file.indexOf(".md")>-1){console.log("正在处理文件：",file);writeFileTime(file,fs);}}    console.log("运行完毕！");});/*file:读取时间的文件以及写入内容的文件fs: 文件系统*/function writeFileTime(file,fs){fs.readFile(file, 'utf8',function(err, data) { //读取文件内容if (err) return console.log("读取文件内容错误：",err);//console.log("文件"+file+"的内容：",data);fs.stat(file,function(err, stats) { //读取文件信息，创建时间等   if (err) return console.log("读取文件信息错误：",err);//console.log("文件"+file+"的信息：",stats);  //打印文件的信息//console.log("创建时间是：",stats.mtime);//console.log("文件的创建时间是：",getFormatDate(stats.mtime));            var result= data.replace(RegExp,""); //替换更新时间result = result.replace(/categories:/g, "updated: "+getFormatDate(stats.mtime)+"\r"+"categories:");//data:替换为标准化日期//console.log("修改后文件内容为：",result);fs.writeFile(file, result, 'utf8',function(err) { //写入新的文件内容if (err) return console.log("写文件错误：",err);});});});}/* timeStr:时间，格式可为："September 16,2016 14:15:05、 "September 16,2016"、"2016/09/16 14:15:05"、"2016/09/16"、 '2014-04-23T18:55:49'和毫秒 dateSeparator：年、月、日之间的分隔符，默认为"-"， timeSeparator：时、分、秒之间的分隔符，默认为":" */function getFormatDate(timeStr, dateSeparator, timeSeparator) {    dateSeparator = dateSeparator ? dateSeparator : "-";    timeSeparator = timeSeparator ? timeSeparator : ":";    var date = new Date(timeStr),            year = date.getFullYear(),// 获取完整的年份(4位,1970)            month = date.getMonth(),// 获取月份(0-11,0代表1月,用的时候记得加上1)            day = date.getDate(),// 获取日(1-31)            hour = date.getHours(),// 获取小时数(0-23)            minute = date.getMinutes(),// 获取分钟数(0-59)            seconds = date.getSeconds(),// 获取秒数(0-59)            Y = year + dateSeparator,            M = ((month + 1) > 9 ? (month + 1) : ('0' + (month + 1))) + dateSeparator,            D = (day > 9 ? day : ('0' + day)) + ' ',            h = (hour > 9 ? hour : ('0' + hour)) + timeSeparator,            m = (minute > 9 ? minute : ('0' + minute)) + timeSeparator,            s = (seconds > 9 ? seconds : ('0' + seconds)),            formatDate = Y + M + D + h + m + s;    return formatDate;}]]></content>
+    
+    
+      
+      
+    <summary type="html">#!/usr/bin/env node
+/*
+批量添加修改时间
+用于bolg初始化修改时间
+*/
+
+console.log(&#39;脚本开始运行..&#39;);
+var fs = require(&quot;fs&quot;); //请求文件系统
+var file = &quot;./txt&quot;; //设置读取和写入的文件</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>newpapername修改内容</title>
     <link href="http://example.com/2022/06/09/newpapername/"/>
     <id>http://example.com/2022/06/09/newpapername/</id>
     <published>2022-06-09T00:32:54.000Z</published>
-    <updated>2022-06-27T16:53:45.518Z</updated>
+    <updated>2022-06-27T17:34:42.595Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 添加常用控件</span><br><span class="line">map.addControl(new BMap.ZoomControl());</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 解决脚手架中全局变量访问的问题</span><br><span class="line">const BMap = window.BMapGL;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 获取当前被点击项</span><br><span class="line">const target = e.domEvent.changedTouches[0];</span><br></pre></td></tr></table></figure><p>FilterMore 的 css 文件中</p><p>将 bottom：0px 改为 50px</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.footer &#123;</span><br><span class="line">  position: fixed;</span><br><span class="line">  left: 80px;</span><br><span class="line">  right: 0;</span><br><span class="line">  bottom: 50px;</span><br><span class="line">  background-color: #fff;</span><br><span class="line">  z-index: 3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &quot;react&quot;;</span><br><span class="line">import axios from &quot;axios&quot;;</span><br><span class="line"></span><br><span class="line">import &#123; BASE_URL &#125; from &quot;../../utils&quot;;</span><br><span class="line"></span><br><span class="line">import NavHeader from &quot;../../components/NavHeader&quot;;</span><br><span class="line">import HouseItem from &quot;../../components/HouseItem&quot;;</span><br><span class="line"></span><br><span class="line">import styles from &quot;./index.module.css&quot;;</span><br><span class="line"></span><br><span class="line">export default class Rent extends Component &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    // 出租房屋列表</span><br><span class="line">    list: [],</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  // // 获取已发布房源的列表数据</span><br><span class="line">  // async getHouseList() &#123;</span><br><span class="line">  //     const res = await API.get(&#x27;/user/houses&#x27;)</span><br><span class="line"></span><br><span class="line">  //     const &#123; status, body &#125; = res.data</span><br><span class="line">  //     if (status === 200) &#123;</span><br><span class="line">  //         this.setState(&#123;</span><br><span class="line">  //             list: body</span><br><span class="line">  //         &#125;)</span><br><span class="line">  //     &#125; else &#123;</span><br><span class="line">  //         const &#123; history, location &#125; = this.props</span><br><span class="line">  //         history.replace(&#x27;/login&#x27;, &#123;</span><br><span class="line">  //             from: location</span><br><span class="line">  //         &#125;)</span><br><span class="line">  //     &#125;</span><br><span class="line">  // &#125;</span><br><span class="line">  // 获取最新资讯</span><br><span class="line">  async getNews() &#123;</span><br><span class="line">    const res = await axios.get(</span><br><span class="line">      &quot;http://localhost:8080/home/news?area=AREA%7C88cff55c-aaa4-e2e0&quot;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      news: res.data.body,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  async componentDidMount() &#123;</span><br><span class="line">    this.getNews();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  renderHouseItem() &#123;</span><br><span class="line">    const &#123; list &#125; = this.state;</span><br><span class="line">    const &#123; history &#125; = this.props;</span><br><span class="line"></span><br><span class="line">    return list.map((item) =&gt; &#123;</span><br><span class="line">      return (</span><br><span class="line">        &lt;HouseItem</span><br><span class="line">          key=&#123;item.houseCode&#125;</span><br><span class="line">          onClick=&#123;() =&gt; history.push(`/detail/$&#123;item.houseCode&#125;`)&#125;</span><br><span class="line">          src=&#123;BASE_URL + item.houseImg&#125;</span><br><span class="line">          title=&#123;item.title&#125;</span><br><span class="line">          desc=&#123;item.desc&#125;</span><br><span class="line">          tags=&#123;item.tags&#125;</span><br><span class="line">          price=&#123;item.price&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  renderRentList() &#123;</span><br><span class="line">    return &lt;div className=&#123;styles.houses&#125;&gt;&#123;this.renderHouseItem()&#125;&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div className=&#123;styles.root&#125;&gt;</span><br><span class="line">        &lt;NavHeader&gt;资讯&lt;/NavHeader&gt;</span><br><span class="line"></span><br><span class="line">        &#123;this.renderRentList()&#125;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -33,8 +89,10 @@
     
     
     
+    <category term="新闻发布后台管理系统" scheme="http://example.com/categories/%E6%96%B0%E9%97%BB%E5%8F%91%E5%B8%83%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"/>
     
-    <category term="新闻发布后台管理系统" scheme="http://example.com/tags/%E6%96%B0%E9%97%BB%E5%8F%91%E5%B8%83%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"/>
+    
+    <category term="react" scheme="http://example.com/tags/react/"/>
     
   </entry>
   
@@ -43,7 +101,7 @@
     <link href="http://example.com/2022/06/08/hello-world/"/>
     <id>http://example.com/2022/06/08/hello-world/</id>
     <published>2022-06-08T14:33:34.497Z</published>
-    <updated>2022-06-08T14:33:34.497Z</updated>
+    <updated>2022-06-27T17:19:55.778Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
