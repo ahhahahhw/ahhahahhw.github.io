@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Vue应用层</title>
+      <link href="/2022/06/28/Vue%E5%BA%94%E7%94%A8%E5%B1%82/"/>
+      <url>/2022/06/28/Vue%E5%BA%94%E7%94%A8%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Vue应用层"><a href="#Vue应用层" class="headerlink" title="Vue应用层"></a>Vue应用层</h1><h2 id="1、MVC与MVVM"><a href="#1、MVC与MVVM" class="headerlink" title="1、MVC与MVVM"></a>1、MVC与MVVM</h2><p>MVC缺点：前后端无法独立开发，前端没有自己的数据中心，太过依赖于后台</p><p>MVVM（前后端分离）：前端有自己的视图控制器</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">el:&quot;#app&quot;,</span><br><span class="line">data() &#123;</span><br><span class="line">return &#123;</span><br><span class="line">message: &#x27;vue&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><h2 id="2、v-model的原理"><a href="#2、v-model的原理" class="headerlink" title="2、v-model的原理"></a>2、v-model的原理</h2><p>v-model表现形式是数据双向绑定</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">&lt;input placeholder=&quot;请输入电话&quot; v-model=&quot;tel&quot;/&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123;tel&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">el:&quot;#app&quot;,</span><br><span class="line">data() &#123;</span><br><span class="line">return &#123;</span><br><span class="line">message: &#x27;vue&#x27;,</span><br><span class="line">tel:&#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><h2 id="3、data-为什么是函数"><a href="#3、data-为什么是函数" class="headerlink" title="3、data()为什么是函数"></a>3、data()为什么是函数</h2><p>闭包，让每一个组件都有自己的私有作用域，确保各组件数据不会相互干扰，如果不用闭包的方法，采用纯对象的方法就会有干扰 &#x3D;&gt; let obj &#x3D; { }</p><h2 id="4、v-if与v-show"><a href="#4、v-if与v-show" class="headerlink" title="4、v-if与v-show"></a>4、v-if与v-show</h2><ul><li>v-if：不满足条件的话不会渲染dom，使用场景：单次判断，只需要判断一次</li><li>v-show的type只有true或false，它把display设置为none，它是隐藏dom，使用场景：多次切换，就不需要多次渲染，不会浪费性能，v-show不能用于权限操作</li></ul><h2 id="5、虚拟dom"><a href="#5、虚拟dom" class="headerlink" title="5、虚拟dom"></a>5、虚拟dom</h2><p>render负责把template里面的东西转化成真实dom<br>1.初始化的时候，将真实dom转化成虚拟dom<br>2.更新的时候做对比</p><ul><li>虚拟dom是在vue2.0中加入的</li><li>虚拟dom的本质就是一个js对象，它具备跨平台的特质</li></ul><p>vue的渲染过程：</p><ul><li><p>将真实dom转化成真实dom，也就是js对象</p></li><li><p>更新的时候用来做对比</p></li></ul><p><img src="/2022/06/28/Vue%E5%BA%94%E7%94%A8%E5%B1%82/vue1.png"></p><p>虚拟dom是如何提升vue的渲染效率？</p><ul><li>组件化</li><li>数据驱动</li></ul><p>虚拟dom可以局部更新节点数据，从直接操作dom的地方拿到两个js对象中去做比较，通过两个对象的对比，找出差异项进行更新，损耗小，优化性能。</p><h2 id="6、diff-中的patch"><a href="#6、diff-中的patch" class="headerlink" title="6、diff()中的patch()"></a>6、diff()中的patch()</h2><p>vue的渲染有两条线：</p><p>1.初始化：patch(container,vnode)，将虚拟dom转化为真实dom</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function createElement(vnode)&#123;</span><br><span class="line">//虚拟dom生成的三要素：目标元素，属性，子节点，目标元素是不可或缺的</span><br><span class="line">let tag = vnode.tag//目标元素ul</span><br><span class="line">let attrs = vnode.attrs || &#123;&#125;//属性</span><br><span class="line">let children = vnode.children || []//子节点</span><br><span class="line"></span><br><span class="line">if(!tag) &#123;</span><br><span class="line">retun null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建对应的dom</span><br><span class="line">let elem = document.createElement(tag)</span><br><span class="line">let attrName</span><br><span class="line">//给dom添加属性</span><br><span class="line">for(attrName in attrs)&#123;</span><br><span class="line">if(attrs.hasOwnProperty(attrName))&#123;</span><br><span class="line">elem.setAttribute(attrName,attrs[attrName])</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//将子元素添加到目标之上</span><br><span class="line">children.forEach(function(childVnode)&#123;</span><br><span class="line">elem.appendChild(createElement(childVnode))</span><br><span class="line">&#125;);</span><br><span class="line">return elem</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>2.更新：update(vnode,newVnode)</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function updateChildren(vnode,newVnode) &#123;</span><br><span class="line">let children = vnode.cildren || []//现有节点</span><br><span class="line">let newChildren = newVnode.children || []//新节点</span><br><span class="line">children.forEach(function(childrenVnode,index)&#123;</span><br><span class="line">//循环每一项，通过index将新老节点进行对换</span><br><span class="line">let newChildrenVnode = newChildren[index]</span><br><span class="line">//如果第一层tag没有变化</span><br><span class="line">if(childrenVnode.tag === newChildrenVnode.tag)&#123;</span><br><span class="line">//继续进行深层次的对比，通过递归去比较</span><br><span class="line">updateChildren(childrenVnode,newChildrenVnode)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">//将childrenVnode替换成newChildrenVnode</span><br><span class="line">replaceNode(childrenVnode,newChildrenVnode)</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ES6相关面试题</title>
       <link href="/2022/06/28/ES6%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
       <url>/2022/06/28/ES6%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
