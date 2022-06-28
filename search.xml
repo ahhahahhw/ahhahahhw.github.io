@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>ES6相关面试题</title>
+      <link href="/2022/06/28/ES6%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+      <url>/2022/06/28/ES6%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ES6相关面试题"><a href="#ES6相关面试题" class="headerlink" title="ES6相关面试题"></a>ES6相关面试题</h1><h2 id="1、varconstlet"><a href="#1、varconstlet" class="headerlink" title="1、varconstlet"></a>1、varconstlet</h2><h3 id="var存在的问题"><a href="#var存在的问题" class="headerlink" title="var存在的问题"></a>var存在的问题</h3><ul><li>声明提升</li></ul><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//var是先使用后定义</span><br><span class="line">console.log(num)//undefined</span><br><span class="line">var num = 123</span><br></pre></td></tr></table></figure><ul><li>变量覆盖</li></ul><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var num1 = 12</span><br><span class="line">var num1 = 34</span><br><span class="line">console.log(num1)//34</span><br></pre></td></tr></table></figure><ul><li>没有块级作用域</li></ul><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function fn2() &#123;</span><br><span class="line">for(var i = 0;i &lt; 3;i++)&#123;</span><br><span class="line">console.log(i)//0123</span><br><span class="line">&#125;</span><br><span class="line">console.log(i)//0123</span><br><span class="line">&#125;</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure><h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><ul><li>const定义的变量不能被修改，否则会报错</li><li>声明之后必须赋值，否则会报错</li><li>支持块级作用域，不存在声明提升和变量覆盖</li></ul><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const DEMO = 123</span><br><span class="line">DEMO = 456</span><br><span class="line">console.log(DEMO)//报错</span><br></pre></td></tr></table></figure><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><ul><li>let支持块级作用域，不存在声明提升和变量覆盖</li><li>定义的变量可以被修改</li><li>声明之后可以不赋值</li></ul><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//运用解构的方式互换两个值</span><br><span class="line">let a = 1;</span><br><span class="line">let b = 2;</span><br><span class="line">[a,b] = [b,a]</span><br><span class="line">console.log(a,b)//2,1</span><br></pre></td></tr></table></figure><h3 id="2、数组去重"><a href="#2、数组去重" class="headerlink" title="2、数组去重"></a>2、数组去重</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let arr = [12,43,23,12,43,55]</span><br><span class="line">let item = [...new Set(arr)]</span><br><span class="line">console.log(item)</span><br></pre></td></tr></table></figure><h3 id="3、promise的原理"><a href="#3、promise的原理" class="headerlink" title="3、promise的原理"></a>3、promise的原理</h3><p>promise的构造函数是同步执行的，.then()方法是异步执行的</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const promise = new Promise((resolve,reject) =&gt; &#123;</span><br><span class="line">console.log(1)</span><br><span class="line">resolve();</span><br><span class="line">console.log(2)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.then(() =&gt; &#123;</span><br><span class="line">console.log(3)</span><br><span class="line">&#125;)</span><br><span class="line">console.log(4)</span><br><span class="line">//1,2,4,3</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ES6面试题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JS面试题</title>
       <link href="/2022/06/28/JS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
       <url>/2022/06/28/JS%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
