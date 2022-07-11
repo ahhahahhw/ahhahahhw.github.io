@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-06-29T07:54:10.000Z</updated>
+  <updated>2022-07-11T06:29:09.376Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,156 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>07_事件的基本使用</title>
+    <link href="http://example.com/2022/07/11/07-%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"/>
+    <id>http://example.com/2022/07/11/07-%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</id>
+    <published>2022-07-11T06:29:09.000Z</published>
+    <updated>2022-07-11T06:29:09.376Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="事件的基本使用"><a href="#事件的基本使用" class="headerlink" title="事件的基本使用"></a>事件的基本使用</h1><p>事件的基本使用：</p><p>​1.使用v-on：xxx或@xxx绑定事件，其中xxx是事件名</p><p>​2.事件的回调需要配置在methods对象中，最终会在vm上</p><p>​3.methods中配置的函数，不要用箭头函数，否则this就不是vm了</p><p>​4.methods中配置的函数，都是被vue所管理的函数，this的指向是vm或组件实例对象</p><p>​5.@click&#x3D;”demo”和@click&#x3D;”demo($event)”效果一致，但后者可以传参</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;h2&gt;欢迎来到&#123;&#123;name&#125;&#125;学习&lt;/h2&gt;</span><br><span class="line">        &lt;!-- &lt;button v-on:click=&quot;showInfo&quot;&gt;点我提示信息&lt;/button&gt; --&gt;</span><br><span class="line">        &lt;button @click=&quot;showInfo1&quot;&gt;点我提示信息1（不传参）&lt;/button&gt;</span><br><span class="line">        &lt;button @click=&quot;showInfo2($event,66)&quot;&gt;点我提示信息2（传参）&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    const vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: &#x27;尚硅谷&#x27;,</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            showInfo1(event) &#123;</span><br><span class="line">                // console.log(event.target.innerText)</span><br><span class="line">                // console.log(this) //此处的this是vm</span><br><span class="line">                alert(&#x27;同学你好！&#x27;)</span><br><span class="line">            &#125;,</span><br><span class="line">            showInfo2(event, number) &#123;</span><br><span class="line">                console.log(event, number)</span><br><span class="line">                // console.log(event.target.innerText)</span><br><span class="line">                // console.log(this) //此处的this是vm</span><br><span class="line">                alert(&#x27;同学你好！！&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;事件的基本使用&quot;&gt;&lt;a href=&quot;#事件的基本使用&quot; class=&quot;headerlink&quot; title=&quot;事件的基本使用&quot;&gt;&lt;/a&gt;事件的基本使用&lt;/h1&gt;&lt;p&gt;事件的基本使用：&lt;/p&gt;
+&lt;p&gt;​	1.使用v-on：xxx或@xxx绑定事件，其中xxx是事件名&lt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>06_Vue中的数据代理</title>
+    <link href="http://example.com/2022/07/11/06-Vue%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86/"/>
+    <id>http://example.com/2022/07/11/06-Vue%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86/</id>
+    <published>2022-07-11T06:28:44.000Z</published>
+    <updated>2022-07-11T06:28:44.969Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Vue中的数据代理"><a href="#Vue中的数据代理" class="headerlink" title="Vue中的数据代理"></a>Vue中的数据代理</h1><p>1.vue中的数据代理：通过vm对象来代理data对象中属性的操作</p><p>2.Vue中数据代理的好处：更加方便的操作data中的数据</p><p>3.基本原理：</p><p>​通过Object.defineProperty()把data对象中所有属性添加到vm上。</p><p>​为每一个添加到vm上的属性都指定一个getter&#x2F;setter。</p><p>​在getter&#x2F;setter内部去操作（读&#x2F;写）data中对应的属性。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;h2&gt;学校名称：&#123;&#123;name&#125;&#125;&lt;/h2&gt;</span><br><span class="line">        &lt;h2&gt;学校地址：&#123;&#123;address&#125;&#125;&lt;/h2&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    const vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: &#x27;尚硅谷&#x27;,</span><br><span class="line">            address: &#x27;宏福科技园&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Vue中的数据代理&quot;&gt;&lt;a href=&quot;#Vue中的数据代理&quot; class=&quot;headerlink&quot; title=&quot;Vue中的数据代理&quot;&gt;&lt;/a&gt;Vue中的数据代理&lt;/h1&gt;&lt;p&gt;1.vue中的数据代理：通过vm对象来代理data对象中属性的操作&lt;/p&gt;
+&lt;p&gt;2</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>05_回顾Object.defineProperty方法</title>
+    <link href="http://example.com/2022/07/11/05-%E5%9B%9E%E9%A1%BEObject-defineProperty%E6%96%B9%E6%B3%95/"/>
+    <id>http://example.com/2022/07/11/05-%E5%9B%9E%E9%A1%BEObject-defineProperty%E6%96%B9%E6%B3%95/</id>
+    <published>2022-07-11T06:28:23.000Z</published>
+    <updated>2022-07-11T06:28:23.235Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="回顾Object-defineProperty方法"><a href="#回顾Object-defineProperty方法" class="headerlink" title="回顾Object.defineProperty方法"></a>回顾Object.defineProperty方法</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; &gt;</span><br><span class="line">let number = 18</span><br><span class="line">let person = &#123;</span><br><span class="line">name:&#x27;张三&#x27;,</span><br><span class="line">sex:&#x27;男&#x27;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Object.defineProperty(person,&#x27;age&#x27;,&#123;</span><br><span class="line">// value:18,</span><br><span class="line">// enumerable:true, //控制属性是否可以枚举，默认值是false</span><br><span class="line">// writable:true, //控制属性是否可以被修改，默认值是false</span><br><span class="line">// configurable:true //控制属性是否可以被删除，默认值是false</span><br><span class="line"></span><br><span class="line">//当有人读取person的age属性时，get函数(getter)就会被调用，且返回值就是age的值</span><br><span class="line">get()&#123;</span><br><span class="line">console.log(&#x27;有人读取age属性了&#x27;)</span><br><span class="line">return number</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">//当有人修改person的age属性时，set函数(setter)就会被调用，且会收到修改的具体值</span><br><span class="line">set(value)&#123;</span><br><span class="line">console.log(&#x27;有人修改了age属性，且值是&#x27;,value)</span><br><span class="line">number = value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// console.log(Object.keys(person))</span><br><span class="line"></span><br><span class="line">console.log(person)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;回顾Object-defineProperty方法&quot;&gt;&lt;a href=&quot;#回顾Object-defineProperty方法&quot; class=&quot;headerlink&quot; title=&quot;回顾Object.defineProperty方法&quot;&gt;&lt;/a&gt;回顾Object.de</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>04_理解MVVM</title>
+    <link href="http://example.com/2022/07/11/04-%E7%90%86%E8%A7%A3MVVM/"/>
+    <id>http://example.com/2022/07/11/04-%E7%90%86%E8%A7%A3MVVM/</id>
+    <published>2022-07-11T06:27:46.000Z</published>
+    <updated>2022-07-11T06:27:49.533Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="理解MVVM"><a href="#理解MVVM" class="headerlink" title="理解MVVM"></a>理解MVVM</h1><p>MVVM模型</p><p>​1.M：模型（Model）：data中的数据</p><p>​2.V：视图（view）：模板代码</p><p>​3.VM：视图模型（viewModel）：vue实例</p><p>观察发现：</p><p>​1.data中所有的属性，最后都出现在vm身上</p><p>​2.vm身上所有的属性及vuew原型上所有属性，在vue模板中都可以直接使用</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;h1&gt;学校名称：&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">        &lt;h1&gt;学校地址：&#123;&#123;address&#125;&#125;&lt;/h1&gt;</span><br><span class="line">        &lt;!-- &lt;h1&gt;测试一下1：&#123;&#123;1+1&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;h1&gt;测试一下2：&#123;&#123;$options&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;h1&gt;测试一下3：&#123;&#123;$emit&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;h1&gt;测试一下4：&#123;&#123;_c&#125;&#125;&lt;/h1&gt; --&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    const vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: &#x27;尚硅谷&#x27;,</span><br><span class="line">            address: &#x27;北京&#x27;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(vm)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;理解MVVM&quot;&gt;&lt;a href=&quot;#理解MVVM&quot; class=&quot;headerlink&quot; title=&quot;理解MVVM&quot;&gt;&lt;/a&gt;理解MVVM&lt;/h1&gt;&lt;p&gt;MVVM模型&lt;/p&gt;
+&lt;p&gt;​	1.M：模型（Model）：data中的数据&lt;/p&gt;
+&lt;p&gt;​	2.V：视图</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>03_el与data的两种写法</title>
+    <link href="http://example.com/2022/07/11/03-el%E4%B8%8Edata%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/"/>
+    <id>http://example.com/2022/07/11/03-el%E4%B8%8Edata%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/</id>
+    <published>2022-07-11T06:27:19.000Z</published>
+    <updated>2022-07-11T06:27:20.365Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="el与data的两种写法"><a href="#el与data的两种写法" class="headerlink" title="el与data的两种写法"></a>el与data的两种写法</h1><p>data与el的两种写法</p><p>​el有两种写法：</p><p>​1.new Vue时候配置el属性</p><p>​2.先创建vue实例，随后再通过vm.$mount(‘root’)指定el的值</p><p>​data有两种写法：</p><p>​1.对象式</p><p>​2.函数式</p><p>​目前哪种写法都可以，学习到组件时，data必须用函数式</p><p>注意：由vue管理的函数，一定不要写箭头函数，一旦写了箭头函数，this就不再是vue实例了</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;h1&gt;你好，&#123;&#123;name&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    //el的两种写法</span><br><span class="line">    /* const v = new Vue(&#123;</span><br><span class="line">    //el:&#x27;#root&#x27;, //第一种写法</span><br><span class="line">    data:&#123;</span><br><span class="line">    name:&#x27;尚硅谷&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(v)</span><br><span class="line">    v.$mount(&#x27;#root&#x27;) //第二种写法 */</span><br><span class="line"></span><br><span class="line">    //data的两种写法</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        //data的第一种写法：对象式</span><br><span class="line">        /* data:&#123;</span><br><span class="line">        name:&#x27;尚硅谷&#x27;</span><br><span class="line">        &#125; */</span><br><span class="line"></span><br><span class="line">        //data的第二种写法：函数式</span><br><span class="line">        data() &#123;</span><br><span class="line">            console.log(&#x27;@@@&#x27;, this) //此处的this是Vue实例对象</span><br><span class="line">            return &#123;</span><br><span class="line">                name: &#x27;尚硅谷&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;el与data的两种写法&quot;&gt;&lt;a href=&quot;#el与data的两种写法&quot; class=&quot;headerlink&quot; title=&quot;el与data的两种写法&quot;&gt;&lt;/a&gt;el与data的两种写法&lt;/h1&gt;&lt;p&gt;data与el的两种写法&lt;/p&gt;
+&lt;p&gt;​	el有两种写法：</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>02_数据绑定</title>
+    <link href="http://example.com/2022/07/11/02-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/"/>
+    <id>http://example.com/2022/07/11/02-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/</id>
+    <published>2022-07-11T06:26:09.000Z</published>
+    <updated>2022-07-11T06:26:39.961Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h1><p>Vue中有2种数据绑定的方式：</p><p>单向数据绑定（v-bind）：数据只能从data流向页面</p><p>双向数据绑定（v-model）：数据不仅能从data流向页面，还可以从页面流向data</p><p>双向绑定一般都应用在表当元素上（如：input，select等）</p><p>v-model：value可以简写为v-model，因为v-model默认收集的就是value值]</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;!-- 普通写法 --&gt;</span><br><span class="line">        &lt;!-- 单向数据绑定：&lt;input type=&quot;text&quot; v-bind:value=&quot;name&quot;&gt;&lt;br/&gt;</span><br><span class="line">双向数据绑定：&lt;input type=&quot;text&quot; v-model:value=&quot;name&quot;&gt;&lt;br/&gt; --&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 简写 --&gt;</span><br><span class="line">        单向数据绑定：&lt;input type=&quot;text&quot; :value=&quot;name&quot;&gt;&lt;br /&gt;</span><br><span class="line">        双向数据绑定：&lt;input type=&quot;text&quot; v-model=&quot;name&quot;&gt;&lt;br /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 如下代码是错误的，因为v-model只能应用在表单类元素（输入类元素）上 --&gt;</span><br><span class="line">        &lt;!-- &lt;h2 v-model:x=&quot;name&quot;&gt;你好啊&lt;/h2&gt; --&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: &#x27;111&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;数据绑定&quot;&gt;&lt;a href=&quot;#数据绑定&quot; class=&quot;headerlink&quot; title=&quot;数据绑定&quot;&gt;&lt;/a&gt;数据绑定&lt;/h1&gt;&lt;p&gt;Vue中有2种数据绑定的方式：&lt;/p&gt;
+&lt;p&gt;单向数据绑定（v-bind）：数据只能从data流向页面&lt;/p&gt;
+&lt;p&gt;双向数</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>01_模板语法</title>
+    <link href="http://example.com/2022/07/11/01%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/"/>
+    <id>http://example.com/2022/07/11/01%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/</id>
+    <published>2022-07-11T06:24:52.000Z</published>
+    <updated>2022-07-11T06:26:51.151Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h1><p>Vue模板语法有2大类：</p><p>插值语法：</p><p>​功能：用于解析标签体内容</p><p>​写法：，xxx是js表达式，且可以直接读取到data中的所有属性</p><p>指令语法：</p><p>​功能：用于解析标签（包括：标签属性、标签体属性、绑定事件…….）</p><p>​举例：v-bind:href&#x3D;”xxx”或简写为:href&#x3D;”xxx”，xxx同样要写js表达式，且可以直接读取到data中的所有属性</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">        &lt;h1&gt;插值语法&lt;/h1&gt;</span><br><span class="line">        &lt;h3&gt;你好，&#123;&#123;name&#125;&#125;&lt;/h3&gt;</span><br><span class="line">        &lt;hr /&gt;</span><br><span class="line">        &lt;h1&gt;指令语法&lt;/h1&gt;</span><br><span class="line">        &lt;a v-bind:href=&quot;school.url.toUpperCase()&quot; x=&quot;hello&quot;&gt;点我去&#123;&#123;school.name&#125;&#125;学习1&lt;/a&gt;</span><br><span class="line">        &lt;a :href=&quot;school.url&quot; x=&quot;hello&quot;&gt;点我去&#123;&#123;school.name&#125;&#125;学习2&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: &#x27;#root&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: &#x27;jack&#x27;,</span><br><span class="line">            school: &#123;</span><br><span class="line">                name: &#x27;尚硅谷&#x27;,</span><br><span class="line">                url: &#x27;http://www.atguigu.com&#x27;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;模板语法&quot;&gt;&lt;a href=&quot;#模板语法&quot; class=&quot;headerlink&quot; title=&quot;模板语法&quot;&gt;&lt;/a&gt;模板语法&lt;/h1&gt;&lt;p&gt;Vue模板语法有2大类：&lt;/p&gt;
+&lt;p&gt;插值语法：&lt;/p&gt;
+&lt;p&gt;​	功能：用于解析标签体内容&lt;/p&gt;
+&lt;p&gt;​	写法：，x</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>CSS面试题</title>
